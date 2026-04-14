@@ -5,13 +5,21 @@ A real-time Pakistan Sign Language (PSL) Translator Web Application powered by M
 🚀 Features
 
 .🎥 Real-time hand gesture detection
+
 .✋ MediaPipe hand tracking system
+
 .🤖 Machine Learning based prediction
+
 .🔤 Gesture to text conversion
+
 .🔊 Optional voice output support
+
 .⚡ Fast and lightweight performance
+
 .📊 Custom dataset training support
+
 🧠 Tech Stack
+
 .Python 🐍
 .MediaPipe ✋
 .TensorFlow / Keras 🤖
