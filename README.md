@@ -69,23 +69,35 @@ NumPy 📊
 psl-translator/
 │
 ├── images/
+
 │   ├── home.png
+
 │   ├── welcome.png
+
 │   ├── hand_tracking.png
+
 │   ├── prediction.png
+
 │   ├── output.png
+
 │   ├── live_detection.png
+
 │   └── dataset.png
 │
 ├── model/
-│   └── trained_model.h5
+│   └── 
+trained_model.h5
 │
 ├── dataset/
-│   └── (training data)
+│   └── (
+training data)
 │
-├── app.py
-├── requirements.txt
-└── README.md
+├── 
+app.py
+├── 
+requirements.txt
+└── 
+README.md
 ⚙️ Installation
 
 git clone https://github.com/your-username/psl-translator.git
@@ -127,15 +139,4 @@ GitHub: https://github.com/your-username
 
 If you like this project, don’t forget to ⭐ star the repository!
 
-🔥 Tip
-
-👉 Make sure your images folder is correctly named:
-
-images/home.png
-images/welcome.png
-images/hand_tracking.png
-images/prediction.png
-images/output.png
-images/live_detection.png
-images/dataset.png
 
