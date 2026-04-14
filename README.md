@@ -77,6 +77,7 @@ pip install -r requirements.txt
 python app.py
 
 🎯 Use Cases
+
 ♿ Deaf & mute communication support
 
 📚 Pakistan Sign Language learning tool
@@ -101,7 +102,7 @@ Output converted into text 🔤
 Abdul Qadeer
 
 Your Name
-GitHub: https://github.com/your-username
+GitHub: https://github.com/AQadeer0
 
 ⭐ Support
 
