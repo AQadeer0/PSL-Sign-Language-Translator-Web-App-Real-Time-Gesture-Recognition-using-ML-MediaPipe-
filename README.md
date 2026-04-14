@@ -3,6 +3,7 @@
 A real-time Pakistan Sign Language (PSL) Translator Web Application powered by Machine Learning and MediaPipe. It detects hand gestures using webcam and converts them into text in real-time.
 
 🚀 Features
+
 .🎥 Real-time hand gesture detection
 .✋ MediaPipe hand tracking system
 .🤖 Machine Learning based prediction
