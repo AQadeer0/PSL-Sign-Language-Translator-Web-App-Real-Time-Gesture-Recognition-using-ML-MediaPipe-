@@ -56,7 +56,7 @@ NumPy 📊
 
 👋 Sign of ALL DONE
 
-![Sign of ALL DONE](images/home.png)
+![Sign of ALL DONE](https://github.com/AQadeer0/PSL-Sign-Language-Translator-Web-App-Real-Time-Gesture-Recognition-using-ML-MediaPipe-/blob/c620cd0af8ce2827ee20cfc1dd9c92cddf82610e/images/Sign%20of%20All%20Done.png)
 
 👋 Sign of ALLOW 
 
