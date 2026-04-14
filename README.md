@@ -47,6 +47,7 @@ NumPy 📊
 ![Sign of B](images/home.png)
 
 👋 Sign of C
+
 ![Sign of C](images/home.png)
 
 👋 Sign of D
@@ -86,21 +87,36 @@ psl-translator/
 ├── requirements.txt
 └── README.md
 ⚙️ Installation
+
 git clone https://github.com/your-username/psl-translator.git
+
 cd psl-translator
+
 pip install -r requirements.txt
+
 python app.py
+
 🎯 Use Cases
-.♿ Deaf & mute communication support
-.📚 Pakistan Sign Language learning tool
-.🤖 AI / Computer Vision Final Year Project
-.🧑‍💻 Machine Learning portfolio project
+♿ Deaf & mute communication support
+
+📚 Pakistan Sign Language learning tool
+
+🤖 AI / Computer Vision Final Year Project
+
+🧑‍💻 Machine Learning portfolio project
+
 🛠️ How It Works
+
 Webcam captures hand gestures 🎥
+
 MediaPipe detects hand landmarks ✋
+
 ML model predicts gesture 🤖
+
 Output converted into text 🔤
+
 (Optional) Text converted to speech 🔊
+
 👨‍💻 Author
 Abdul Qadeer
 
