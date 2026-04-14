@@ -68,7 +68,7 @@ NumPy 📊
 
 ⚙️ Installation
 
-git clone https://github.com/your-username/psl-translator.git
+git clone https://github.com/AQadeer0/PSL-Sign-Language-Translator-Web-App-Real-Time-Gesture-Recognition-using-ML-MediaPipe-.git
 
 cd psl-translator
 
