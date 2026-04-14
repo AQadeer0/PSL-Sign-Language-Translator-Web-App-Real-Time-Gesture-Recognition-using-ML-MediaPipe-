@@ -52,7 +52,7 @@ NumPy 📊
 
 👋 Sign of D
 
-![Sign of D](images/home.png)
+![Sign of D](https://github.com/AQadeer0/PSL-Sign-Language-Translator-Web-App-Real-Time-Gesture-Recognition-using-ML-MediaPipe-/blob/82d6fae31eef955f091176a755f45d07fe1a3872/images/Sign%20of%20D.png)
 
 👋 Sign of ALL DONE
 
