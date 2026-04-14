@@ -4,41 +4,65 @@ A real-time Pakistan Sign Language (PSL) Translator Web Application powered by M
 
 🚀 Features
 
-.🎥 Real-time hand gesture detection
+🎥 Real-time hand gesture detection
 
-.✋ MediaPipe hand tracking system
+✋ MediaPipe hand tracking system
 
-.🤖 Machine Learning based prediction
+🤖 Machine Learning based prediction
 
-.🔤 Gesture to text conversion
+🔤 Gesture to text conversion
 
-.🔊 Optional voice output support
+🔊 Optional voice output support
 
-.⚡ Fast and lightweight performance
+⚡ Fast and lightweight performance
 
-.📊 Custom dataset training support
+📊 Custom dataset training support
 
 🧠 Tech Stack
 
-.Python 🐍
-.MediaPipe ✋
-.TensorFlow / Keras 🤖
-.OpenCV 🎥
-.NumPy 📊
+Python 🐍
+
+MediaPipe ✋
+
+TensorFlow / Keras 🤖
+
+OpenCV 🎥
+
+NumPy 📊
+
 📸 Screenshots
-.🏠 Home Screen
 
-👋 Welcome Screen
+🏠 Home Screen
 
-.✋ Hand Tracking
+![Home Screen](images/home.png)
 
-.🤖 Model Prediction
 
-.🔤 Text Output Result
+👋 Sign of A 
 
-.🎥 Live Detection
+![Sign of A](images/home.png)
 
-📊 Dataset / Training View
+
+👋 Sign of B 
+
+![Sign of B](images/home.png)
+
+👋 Sign of C
+![Sign of C](images/home.png)
+
+👋 Sign of D
+
+![Sign of D](images/home.png)
+
+👋 Sign of ALL DONE
+
+![Sign of ALL DONE](images/home.png)
+
+👋 Sign of ALLOW 
+
+![Sign of ALLOW](images/home.png)
+
+
+
 
 📂 Project Structure
 psl-translator/
