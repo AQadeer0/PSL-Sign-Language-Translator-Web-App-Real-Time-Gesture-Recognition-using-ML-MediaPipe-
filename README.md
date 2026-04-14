@@ -65,39 +65,7 @@ NumPy 📊
 
 
 
-📂 Project Structure
-psl-translator/
-│
-├── images/
 
-│   ├── home.png
-
-│   ├── welcome.png
-
-│   ├── hand_tracking.png
-
-│   ├── prediction.png
-
-│   ├── output.png
-
-│   ├── live_detection.png
-
-│   └── dataset.png
-│
-├── model/
-│   └── 
-trained_model.h5
-│
-├── dataset/
-│   └── (
-training data)
-│
-├── 
-app.py
-├── 
-requirements.txt
-└── 
-README.md
 ⚙️ Installation
 
 git clone https://github.com/your-username/psl-translator.git
