@@ -44,7 +44,7 @@ NumPy 📊
 
 👋 Sign of B 
 
-![Sign of B](images/home.png)
+![Sign of B](https://github.com/AQadeer0/PSL-Sign-Language-Translator-Web-App-Real-Time-Gesture-Recognition-using-ML-MediaPipe-/blob/79cd4b7e6d7043293198804b7cf1b2722aacc8e6/images/Sign%20of%20B.png)
 
 👋 Sign of C
 
