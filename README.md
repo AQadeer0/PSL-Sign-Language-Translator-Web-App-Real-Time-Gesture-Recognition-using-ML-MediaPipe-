@@ -60,7 +60,7 @@ NumPy 📊
 
 👋 Sign of ALLOW 
 
-![Sign of ALLOW](images/home.png)
+![Sign of ALLOW](https://github.com/AQadeer0/PSL-Sign-Language-Translator-Web-App-Real-Time-Gesture-Recognition-using-ML-MediaPipe-/blob/c9d45eada65a00b3cd7ab707fdda2f9557c4f6ef/images/Sign%20of%20Allow.png)
 
 
 
