@@ -34,7 +34,7 @@ NumPy 📊
 
 🏠 Home Screen
 
-![Home Screen](images/home.png)
+![Home Screen](https://github.com/AQadeer0/PSL-Sign-Language-Translator-Web-App-Real-Time-Gesture-Recognition-using-ML-MediaPipe-/blob/10048de7f06e1035a6d2b53a35c1b8c1aadb6a0f/images/web%20is%20open%20page.png)
 
 
 👋 Sign of A 
