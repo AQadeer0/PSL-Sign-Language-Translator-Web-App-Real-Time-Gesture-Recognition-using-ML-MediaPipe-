@@ -9,19 +9,24 @@
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
         :root {
             --primary: #00f2fe;
             --secondary: #4facfe;
+            --accent: #f0ab3d;
             --bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-bg: rgba(30, 41, 59, 0.6);
             --text: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
             color: var(--text);
             display: flex;
             flex-direction: column;
@@ -31,29 +36,63 @@
         }
 
         header {
-            margin: 2rem 0;
+            margin: 1.5rem 0;
             text-align: center;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin: 0;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .status-pill {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 4px 12px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 2rem;
+            width: 95%;
+            max-width: 1400px;
+            margin-bottom: 2rem;
+        }
+
+        .video-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .container {
             position: relative;
-            width: 90%;
-            max-width: 800px;
-            aspect-ratio: 4/3;
-            border-radius: 20px;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            background: #000;
         }
 
         video,
@@ -71,33 +110,77 @@
         }
 
         .prediction-card {
-            margin-top: 2rem;
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 3rem;
-            border-radius: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            height: 100%;
+        }
+
+        .sentence-panel {
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .panel-label {
+            color: var(--secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sentence-display {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: var(--text);
+            font-weight: 500;
+            min-height: 120px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .current-sign-panel {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(79, 172, 254, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(0, 242, 254, 0.2);
         }
 
         .prediction-text {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+            margin: 0;
+        }
+
+        .confidence-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         .confidence-bar {
-            width: 200px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
             overflow: hidden;
         }
 
@@ -105,181 +188,285 @@
             height: 100%;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             width: 0%;
-            transition: width 0.2s ease;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px var(--primary);
         }
 
-        .status {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            opacity: 0.6;
+        .bottom-controls {
+            width: 95%;
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
-        .controls {
-            margin-top: 2rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            max-width: 90%;
+        .control-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
         }
 
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            min-width: 200px;
+            gap: 1rem;
         }
 
-        .control-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--secondary);
-            font-weight: 600;
-        }
-
-        select,
-        input[type="range"] {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        select, input[type="range"] {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
             color: white;
-            padding: 0.6rem;
-            border-radius: 8px;
+            padding: 0.8rem;
+            border-radius: 12px;
             outline: none;
-            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        select:focus {
-            border-color: var(--primary);
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
 
         button {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--glass);
+            border: 1px solid var(--border);
             color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 1rem;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 160px;
+            gap: 0.5rem;
+            font-family: inherit;
         }
 
         button:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
-        }
-
-        button.active {
-            background: var(--primary);
-            color: var(--bg);
             border-color: var(--primary);
         }
 
-        .sentence-display {
-            margin-top: 1rem;
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 500;
-            max-width: 80%;
-            text-align: center;
-            min-height: 1.5em;
+        button.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--bg);
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
         }
 
-        .sentence-label {
-            color: var(--secondary);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+        button.danger {
+            color: #ff4d4d;
+            border-color: rgba(255, 77, 77, 0.2);
+        }
+
+        button.danger:hover {
+            background: rgba(255, 77, 77, 0.1);
+            border-color: #ff4d4d;
+        }
+
+        .voice-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .suggestion-chip {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>PSL TRANSLATOR</h1>
-        <div class="status" id="status">Initializing Camera...</div>
+        <h1>PSL AI TRANSLATOR</h1>
+        <div class="status-pill" id="status">Initializing Neural Engine...</div>
     </header>
 
-    <div class="container">
-        <video id="input_video" playsinline></video>
-        <canvas id="output_canvas"></canvas>
-    </div>
+    <main class="main-layout">
+        <section class="video-section">
+            <div class="container">
+                <video id="input_video" playsinline></video>
+                <canvas id="output_canvas"></canvas>
+            </div>
+            
+            <div class="control-card">
+                <div class="panel-label">System Performance</div>
+                <div class="control-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.8rem; opacity: 0.7;">Prediction Latency</span>
+                        <input type="range" id="strideRange" min="1" max="15" value="6" style="width: 150px;">
+                    </div>
+                    <select id="cameraSelect">
+                        <option value="">Detecting Optical Inputs...</option>
+                    </select>
+                </div>
+            </div>
+        </section>
 
-    <div class="prediction-card">
-        <div class="sentence-label">Translated Sentence</div>
-        <div class="sentence-display" id="sentence">Waiting for signs...</div>
-        <div style="height: 1px; width: 50%; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
-        <div class="prediction-text" id="prediction">NONE</div>
-        <div class="confidence-bar">
-            <div class="confidence-fill" id="confidence"></div>
-        </div>
+        <section class="prediction-card">
+            <div class="sentence-panel">
+                <div class="panel-label">
+                    <span>Translated Sentence</span>
+                    <button id="clearBtn" class="danger" style="padding: 4px 12px; font-size: 0.7rem; min-width: auto; border-radius: 8px;">CLEAR</button>
+                </div>
+                <div class="sentence-display" id="sentence">Waiting for sign gestures...</div>
+                <div class="suggestions" id="suggestions"></div>
+            </div>
 
-        <!-- Added Top Suggestions -->
-        <div id="suggestions" style="margin-top: 15px; display: flex; gap: 10px; font-size: 0.8rem; opacity: 0.8;">
-            <!-- Will be populated by JS -->
-        </div>
-    </div>
+            <div class="current-sign-panel">
+                <div class="panel-label">Live Inference</div>
+                <h2 class="prediction-text" id="prediction">NONE</h2>
+                <div class="confidence-container">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; opacity: 0.6;">
+                        <span>Confidence Score</span>
+                        <span id="confText">0%</span>
+                    </div>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" id="confidence"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <div class="controls">
-        <div class="control-group">
-            <span class="control-label">Select Camera</span>
-            <select id="cameraSelect">
-                <option value="">Loading Cameras...</option>
-            </select>
-        </div>
-
-        <div class="control-group">
-            <span class="control-label">Prediction Stride (Speed)</span>
-            <input type="range" id="strideRange" min="1" max="15" value="6">
-            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; opacity: 0.5;">
-                <span>Fastest</span>
-                <span>Smoothest</span>
+    <div class="bottom-controls">
+        <div class="control-card">
+            <div class="panel-label">Voice & Audio Engine</div>
+            <div class="voice-controls">
+                <div class="btn-grid">
+                    <button id="voiceToggleBtn" class="active">
+                        <span id="voiceStatusIcon">🔊</span> 
+                        <span id="voiceStatusText">VOICE: ON</span>
+                    </button>
+                    <button id="langToggleBtn">
+                        🌐 ENG / URDU
+                    </button>
+                </div>
+                <button id="speakSentenceBtn" style="width: 100%;">
+                    🗣️ SPEAK FULL SENTENCE
+                </button>
+                <div class="control-group">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem;">
+                        <span>Speech Rate</span>
+                        <span id="rateVal">1.0x</span>
+                    </div>
+                    <input type="range" id="rateRange" min="0.5" max="2" step="0.1" value="1.0">
+                </div>
             </div>
         </div>
 
-        <div style="display: flex; gap: 1rem; align-items: flex-end;">
-            <button id="toggleBtn" class="active">PAUSE AI</button>
-            <button id="clearBtn" style="border-color: rgba(239, 68, 68, 0.3);">CLEAR SENTENCE</button>
+        <div class="control-card">
+            <div class="panel-label">AI Control & History</div>
+            <div class="control-group">
+                <button id="toggleBtn" class="active" style="width: 100%;">
+                    🤖 AI ENGINE: ACTIVE
+                </button>
+                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 12px; font-size: 0.8rem; height: 100px; overflow-y: auto; border: 1px solid var(--border);">
+                    <div style="opacity: 0.5; margin-bottom: 5px; font-weight: 700;">HISTORY LOG</div>
+                    <div id="historyLog">System initialized...</div>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <script>
+      <script>
         const videoElement = document.getElementById('input_video');
         const canvasElement = document.getElementById('output_canvas');
         const canvasCtx = canvasElement.getContext('2d');
         const predictionText = document.getElementById('prediction');
         const sentenceDisplay = document.getElementById('sentence');
         const confidenceFill = document.getElementById('confidence');
+        const confText = document.getElementById('confText');
         const statusText = document.getElementById('status');
         const toggleBtn = document.getElementById('toggleBtn');
         const clearBtn = document.getElementById('clearBtn');
+        const voiceToggleBtn = document.getElementById('voiceToggleBtn');
+        const voiceStatusText = document.getElementById('voiceStatusText');
+        const voiceStatusIcon = document.getElementById('voiceStatusIcon');
         const cameraSelect = document.getElementById('cameraSelect');
         const strideRange = document.getElementById('strideRange');
+        const langToggleBtn = document.getElementById('langToggleBtn');
+        const speakSentenceBtn = document.getElementById('speakSentenceBtn');
+        const rateRange = document.getElementById('rateRange');
+        const rateVal = document.getElementById('rateVal');
+        const historyLog = document.getElementById('historyLog');
+        const suggestionsDiv = document.getElementById('suggestions');
 
         let sequence = [];
         let predictionHistory = [];
-        let probabilityHistory = []; // New: Last N probability distributions
+        let probabilityHistory = [];
         let sentence = [];
         let isPredicting = true;
         let isFetching = false;
         let frameCounter = 0;
-        let zeroHandCounter = 0; // New: To clear sequence when no hands
+        let zeroHandCounter = 0;
         let activeCamera = null;
-        let lastLoggedSign = "";
-        let cooldownFrames = 0; // New: Prevent rapid duplicate additions
+        let cooldownFrames = 0; 
+        let isVoiceEnabled = true;
+        let currentLanguage = 'en'; // 'en' or 'ur'
 
         const SEQUENCE_LENGTH = 30;
         let PREDICTION_STRIDE = 6;
-        const STABILITY_THRESHOLD = 5;
-        const SMOOTHING_WINDOW = 5; // New: average last 5 preds
-        const CONFIDENCE_THRESHOLD = 0.65;
-        const ADD_THRESHOLD = 0.8; // New: higher threshold to add to sentence
-        const API_URL = 'http://localhost:8000/predict'; // Absolute URL for local access
+        const SMOOTHING_WINDOW = 5;
+        const ADD_THRESHOLD = 0.8;
+        const API_URL = 'http://localhost:8000/predict';
+
+        const URDU_MAP = {
+            'All Done': 'مکمل ہو گیا',
+            'Allow': 'اجازت',
+            'Best': 'بہترین',
+            'Clean': 'صاف',
+            'Eat': 'کھانا',
+            'Fail': 'ناکام',
+            'Fine': 'ٹھیک',
+            'Home': 'گھر',
+            'Meet': 'ملنا',
+            'Thank You': 'شکریہ',
+            'Wellcome': 'خوش آمدید',
+            'Yes': 'جی ہاں',
+            'NONE': 'کچھ نہیں'
+        };
+
+        function updateStatus(text, type = 'normal') {
+            statusText.innerText = text;
+            if (type === 'error') {
+                statusText.style.color = '#ff4d4d';
+            } else {
+                statusText.style.color = 'var(--secondary)';
+            }
+        }
+
+        function addHistory(text) {
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const entry = document.createElement('div');
+            entry.style.marginBottom = '4px';
+            entry.innerHTML = `<span style="opacity: 0.5; font-size: 0.7rem;">[${time}]</span> ${text}`;
+            historyLog.prepend(entry);
+            if (historyLog.childNodes.length > 50) historyLog.lastChild.remove();
+        }
 
         function onResults(results) {
             canvasCtx.save();
@@ -288,8 +475,8 @@
 
             if (results.multiHandLandmarks) {
                 for (const landmarks of results.multiHandLandmarks) {
-                    window.drawConnectors(canvasCtx, landmarks, window.HAND_CONNECTIONS, { color: '#00f2fe', lineWidth: 5 });
-                    window.drawLandmarks(canvasCtx, landmarks, { color: '#ffffff', lineWidth: 2, radius: 2 });
+                    window.drawConnectors(canvasCtx, landmarks, window.HAND_CONNECTIONS, { color: '#00f2fe', lineWidth: 4 });
+                    window.drawLandmarks(canvasCtx, landmarks, { color: '#ffffff', lineWidth: 1, radius: 2 });
                 }
             }
             canvasCtx.restore();
@@ -319,13 +506,13 @@
         async function processLandmarks(results) {
             const { keypoints, handsDetected } = extractLandmarks(results);
 
-            // Zero-Hand handling
             if (handsDetected === 0) {
                 zeroHandCounter++;
-                if (zeroHandCounter > 10) {
-                    sequence = []; // Clear stale data
+                if (zeroHandCounter > 15) {
+                    sequence = [];
                     predictionText.innerText = "WAITING...";
                     confidenceFill.style.width = '0%';
+                    confText.innerText = '0%';
                 }
             } else {
                 zeroHandCounter = 0;
@@ -339,7 +526,6 @@
             frameCounter++;
             if (cooldownFrames > 0) cooldownFrames--;
 
-            // Optimization: Only predict every N frames and only if not already fetching
             if (sequence.length === SEQUENCE_LENGTH && frameCounter % PREDICTION_STRIDE === 0 && !isFetching && handsDetected > 0) {
                 isFetching = true;
                 try {
@@ -353,11 +539,9 @@
                         const data = await response.json();
                         const allPreds = data.all_predictions;
 
-                        // 1. Probability Smoothing
                         probabilityHistory.push(allPreds);
                         if (probabilityHistory.length > SMOOTHING_WINDOW) probabilityHistory.shift();
 
-                        // Calculate weighted average
                         const actions = Object.keys(allPreds);
                         let smoothed = {};
                         actions.forEach(action => {
@@ -366,49 +550,46 @@
                             smoothed[action] = sum / probabilityHistory.length;
                         });
 
-                        // 2. Get Top Prediction from smoothed
                         const sortedActions = actions.sort((a, b) => smoothed[b] - smoothed[a]);
                         const topAction = sortedActions[0];
                         const topConfidence = smoothed[topAction];
 
-                        // 3. Update UI
                         predictionText.innerText = topAction;
                         confidenceFill.style.width = (topConfidence * 100) + '%';
+                        confText.innerText = Math.round(topConfidence * 100) + '%';
 
-                        // Show Top 3 Suggestions
-                        const suggestionsDiv = document.getElementById('suggestions');
-                        suggestionsDiv.innerHTML = sortedActions.slice(1, 4).map(a =>
-                            `<span style="background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.1);">
-                                ${a}: ${(smoothed[a] * 100).toFixed(0)}%
-                            </span>`
+                        suggestionsDiv.innerHTML = sortedActions.slice(1, 6).map(a =>
+                            `<span class="suggestion-chip">${a} (${Math.round(smoothed[a] * 100)}%)</span>`
                         ).join('');
 
-                        statusText.innerText = `Active | Smoothing: ${probabilityHistory.length} frames`;
-
-                        // 4. Stability Logic (Add to Sentence)
                         if (topConfidence > ADD_THRESHOLD && cooldownFrames === 0) {
                             predictionHistory.push(topAction);
-                            if (predictionHistory.length > 5) predictionHistory.shift();
+                            if (predictionHistory.length > 4) predictionHistory.shift();
 
                             const isConsistent = predictionHistory.every(v => v === topAction && v !== 'NONE');
 
                             if (isConsistent) {
                                 if (sentence.length === 0 || sentence[sentence.length - 1] !== topAction) {
                                     sentence.push(topAction);
-                                    if (sentence.length > 8) sentence.shift();
-                                    sentenceDisplay.innerText = sentence.join(' → ');
-                                    sentenceDisplay.style.color = 'var(--primary)';
-                                    cooldownFrames = 15; // Wait 15 frames before next sign
-                                    predictionHistory = []; // Reset history
+                                    if (sentence.length > 10) sentence.shift();
+                                    
+                                    sentenceDisplay.innerText = sentence.join('  •  ');
+                                    sentenceDisplay.style.color = 'white';
+                                    
+                                    addHistory(`Detected: <b>${topAction}</b>`);
+
+                                    if (isVoiceEnabled && topAction !== 'NONE') {
+                                        speak(topAction);
+                                    }
+
+                                    cooldownFrames = 20; 
+                                    predictionHistory = [];
                                 }
                             }
                         }
                     }
                 } catch (err) {
-                    if (!statusText.innerText.includes('Offline')) {
-                        console.error('API Error:', err);
-                        statusText.innerText = 'Backend Offline. Please start main.py';
-                    }
+                    updateStatus('Backend Communication Offline', 'error');
                 } finally {
                     isFetching = false;
                 }
@@ -422,16 +603,14 @@
         hands.setOptions({
             maxNumHands: 2,
             modelComplexity: 1,
-            minDetectionConfidence: 0.5,
-            minTrackingConfidence: 0.5
+            minDetectionConfidence: 0.6,
+            minTrackingConfidence: 0.6
         });
 
         hands.onResults(onResults);
 
-        hands.onResults(onResults);
-
         async function setupCamera(deviceId = null) {
-            statusText.innerText = 'Initializing Camera...';
+            updateStatus('Accessing Optical Sensor...');
             if (activeCamera) {
                 await activeCamera.stop();
             }
@@ -443,16 +622,15 @@
                     await hands.send({ image: videoElement });
                 },
                 ...constraints,
-                width: 640,  // Optimized for speed
-                height: 480
+                width: 1280,
+                height: 720
             });
 
             try {
                 await activeCamera.start();
-                statusText.innerText = 'System Ready. Waiting for hands...';
+                updateStatus('AI Engine Ready');
             } catch (err) {
-                console.error("Camera Error:", err);
-                statusText.innerText = 'Camera Error. Check permissions.';
+                updateStatus('Camera Access Denied', 'error');
             }
         }
 
@@ -468,23 +646,84 @@
                 if (videoDevices.length > 0) {
                     cameraSelect.onchange = () => setupCamera(cameraSelect.value);
                 }
-            } catch (err) {
-                console.error("Device Enumeration Error:", err);
-            }
+            } catch (err) {}
         }
 
-        // Initialize
-        listCameras();
-        setupCamera();
+        function speak(text) {
+            if (!window.speechSynthesis || !isVoiceEnabled) return;
+            window.speechSynthesis.cancel();
+            
+            let speakText = text;
+            let lang = 'en-US';
 
+            if (currentLanguage === 'ur' && URDU_MAP[text]) {
+                speakText = URDU_MAP[text];
+                lang = 'ur-PK';
+            }
+            
+            const utterance = new SpeechSynthesisUtterance(speakText);
+            utterance.lang = lang;
+            utterance.rate = parseFloat(rateRange.value);
+            utterance.pitch = 1.0;
+            
+            const voices = window.speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                const preferredVoice = voices.find(v => v.lang.includes(lang.split('-')[0])) || voices[0];
+                utterance.voice = preferredVoice;
+            }
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // --- Event Listeners ---
         toggleBtn.onclick = () => {
             isPredicting = !isPredicting;
-            toggleBtn.innerText = isPredicting ? 'PAUSE AI' : 'RESUME AI';
+            toggleBtn.innerHTML = isPredicting ? '🤖 AI ENGINE: ACTIVE' : '🤖 AI ENGINE: PAUSED';
             toggleBtn.classList.toggle('active');
             if (!isPredicting) {
                 predictionText.innerText = 'PAUSED';
                 confidenceFill.style.width = '0%';
+                addHistory('AI Engine Suspended');
+            } else {
+                addHistory('AI Engine Resumed');
             }
+        };
+
+        voiceToggleBtn.onclick = () => {
+            isVoiceEnabled = !isVoiceEnabled;
+            voiceStatusText.innerText = isVoiceEnabled ? 'VOICE: ON' : 'VOICE: OFF';
+            voiceStatusIcon.innerText = isVoiceEnabled ? '🔊' : '🔇';
+            voiceToggleBtn.classList.toggle('active');
+            if (isVoiceEnabled) speak(currentLanguage === 'en' ? "Voice Enabled" : "آواز بحال");
+        };
+
+        langToggleBtn.onclick = () => {
+            currentLanguage = currentLanguage === 'en' ? 'ur' : 'en';
+            langToggleBtn.innerText = currentLanguage === 'en' ? '🌐 ENG / URDU (ENG)' : '🌐 ENG / URDU (URDU)';
+            langToggleBtn.classList.toggle('active', currentLanguage === 'ur');
+            addHistory(`Language switched to: ${currentLanguage === 'en' ? 'English' : 'Urdu'}`);
+            speak(currentLanguage === 'en' ? "English selected" : "اردو منتخب کی گئی");
+        };
+
+        speakSentenceBtn.onclick = () => {
+            if (sentence.length === 0) {
+                speak("No sentence to speak");
+                return;
+            }
+            
+            let fullText = "";
+            if (currentLanguage === 'ur') {
+                fullText = sentence.map(sign => URDU_MAP[sign] || sign).join(' ');
+            } else {
+                fullText = sentence.join(' ');
+            }
+            
+            speak(fullText);
+            addHistory(`Speaking full sentence (${currentLanguage})`);
+        };
+
+        rateRange.oninput = () => {
+            rateVal.innerText = rateRange.value + 'x';
         };
 
         strideRange.oninput = () => {
@@ -494,9 +733,15 @@
         clearBtn.onclick = () => {
             sentence = [];
             predictionHistory = [];
-            sentenceDisplay.innerText = 'Waiting for signs...';
-            sentenceDisplay.style.color = 'rgba(255, 255, 255, 0.7)';
+            probabilityHistory = [];
+            sentenceDisplay.innerText = 'Waiting for sign gestures...';
+            sentenceDisplay.style.color = 'rgba(255, 255, 255, 0.4)';
+            addHistory('Sentence Cleared');
         };
+
+        // --- Initialize ---
+        listCameras();
+        setupCamera();
 
         // Handle window resize
         function resizeCanvas() {
@@ -505,6 +750,13 @@
         }
         window.addEventListener('resize', resizeCanvas);
         videoElement.addEventListener('loadedmetadata', resizeCanvas);
+        
+        // Populate voices for selection (async)
+        window.speechSynthesis.onvoiceschanged = () => {
+            console.log("Voices loaded:", window.speechSynthesis.getVoices().length);
+        };
+    </script>
+
     </script>
 </body>
 
