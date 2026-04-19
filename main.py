@@ -21,15 +21,24 @@ app.add_middleware(
 )
 
 # --- CONFIGURATION & MODEL LOADING ---
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+actions_path = os.path.join(SCRIPT_DIR, 'actions.npy')
+data_path = os.path.join(SCRIPT_DIR, 'MP_Data')
+model_path = os.path.join(SCRIPT_DIR, 'psl_model.h5')
+
 # Load actions from file if exists, otherwise detect from folders
-if os.path.exists('actions.npy'):
-    actions = np.load('actions.npy')
+if os.path.exists(actions_path):
+    actions = np.load(actions_path)
     print(f"Loaded {len(actions)} actions from actions.npy")
 else:
-    DATA_PATH = os.path.join('MP_Data')
-    actions = np.array(sorted([folder for folder in os.listdir(DATA_PATH) if os.path.isdir(os.path.join(DATA_PATH, folder))]))
-    print(f"Detected {len(actions)} actions from folders")
-model_path = 'psl_model.h5'
+    if os.path.exists(data_path):
+        actions = np.array(sorted([folder for folder in os.listdir(data_path) if os.path.isdir(os.path.join(data_path, folder))]))
+        print(f"Detected {len(actions)} actions from folders")
+    else:
+        actions = np.array([])
+        print("Warning: Neither actions.npy nor MP_Data found.")
+
 if os.path.exists(model_path):
     model = load_model(model_path)
 else:
@@ -43,7 +52,8 @@ class LandmarkData(BaseModel):
 # --- ENDPOINTS ---
 @app.get("/", response_class=HTMLResponse)
 async def root():
-    with open("index.html", "r", encoding="utf-8") as f:
+    html_path = os.path.join(SCRIPT_DIR, "index.html")
+    with open(html_path, "r", encoding="utf-8") as f:
         return f.read()
 
 @app.post("/predict")
